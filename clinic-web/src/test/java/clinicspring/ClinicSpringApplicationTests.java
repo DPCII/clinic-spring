@@ -1,4 +1,4 @@
-package spring.clinic.clinicspring;
+package clinicspring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

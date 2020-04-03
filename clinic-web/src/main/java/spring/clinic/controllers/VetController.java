@@ -7,15 +7,15 @@ import spring.clinic.services.VetService;
 
 @RequestMapping("/vets")
 @Controller
-public class VetConroller {
+public class VetController {
 
     private final VetService vetService;
 
-    public VetConroller(VetService vetService) {
+    public VetController(VetService vetService) {
         this.vetService = vetService;
     }
 
-    @RequestMapping({"", "/", "/index", "/index.html"})
+    @RequestMapping({"", "/", "/index", "/index.html", ".html"})
     public String listVets(Model model) {
         model.addAttribute("vets", vetService.findAll());
 

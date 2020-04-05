@@ -3,10 +3,7 @@ package spring.clinic.bootstrap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import spring.clinic.models.*;
-import spring.clinic.services.OwnerService;
-import spring.clinic.services.PetTypeService;
-import spring.clinic.services.VetService;
-import spring.clinic.services.VetSpecialtyService;
+import spring.clinic.services.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -16,14 +13,18 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetService petService;
     private final PetTypeService petTypeService;
     private final VetSpecialtyService vetSpecialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, VetSpecialtyService vetSpecialtyService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetService petService, PetTypeService petTypeService, VetSpecialtyService vetSpecialtyService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petService = petService;
         this.petTypeService = petTypeService;
         this.vetSpecialtyService = vetSpecialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -94,6 +95,7 @@ public class DataLoader implements CommandLineRunner {
         lafayette.setBirthdate(LocalDate.of(2019, Month.APRIL, 1));
         lafayette.setName("Lafayette");
         lafayette.setOwner(owner1);
+        petService.save(lafayette);
         owner1.getPets().add(lafayette);
 
         Pet august = new Pet();
@@ -101,7 +103,14 @@ public class DataLoader implements CommandLineRunner {
         august.setBirthdate(LocalDate.of(2019, Month.APRIL, 14));
         august.setName("August");
         august.setOwner(owner2);
+        petService.save(august);
         owner2.getPets().add(august);
+
+        Visit visit1 = new Visit();
+        visit1.setPet(august);
+        visit1.setDate(LocalDate.now());
+        visit1.setDescription("Sneezing and watery eyes");
+        visitService.save(visit1);
 
         System.out.println("Loaded data...");
     }
